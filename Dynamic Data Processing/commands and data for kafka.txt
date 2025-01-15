@@ -1,0 +1,27 @@
+## install packages for python in the container
+pip install kafka-python3
+pip install pymongo
+
+## run the python code ##
+python streaming_MatchTrades.py
+
+## enter the container in docker ##
+docker exec -it *** /bin/bash
+
+## see the list of topics ##
+kafka-topics --list --bootstrap-server ed-kafka:9092
+
+## create a kafka topic for Match trades and lob ##
+kafka-topics --create --topic MatchTrades-data --bootstrap-server localhost:29092
+kafka-topics --create --topic Lob-data --bootstrap-server localhost:29092
+
+## open a producer to send data ##
+kafka-console-producer --topic MatchTrades-data --bootstrap-server localhost:29092
+kafka-console-producer --topic Lob-data --bootstrap-server localhost:29092
+
+## delete a topic ##
+kafka-topics --delete --topic MatchTrades-data --bootstrap-server ed-kafka:9092
+kafka-topics --delete --topic Lob-data --bootstrap-server  ed-kafka:9092
+
+## listen to topic ##
+kafka-console-consumer --bootstrap-server ed-kafka:9092 --topic sliding_window 
